@@ -86,7 +86,7 @@ static Error deregisterFrameWrapper(const void *P) {
 }
 #endif
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || (EXECUTION_ENGINE_USE_LLVM_UNWINDER == 1)
 
 template <typename HandleFDEFn>
 Error walkAppleEHFrameSection(const char *const SectionStart,
@@ -128,7 +128,7 @@ Error walkAppleEHFrameSection(const char *const SectionStart,
 
 Error registerEHFrameSection(const void *EHFrameSectionAddr,
                              size_t EHFrameSectionSize) {
-#ifdef __APPLE__
+#if defined(__APPLE__) || (EXECUTION_ENGINE_USE_LLVM_UNWINDER == 1)
   // On Darwin __register_frame has to be called for each FDE entry.
   return walkAppleEHFrameSection(static_cast<const char *>(EHFrameSectionAddr),
                                  EHFrameSectionSize, registerFrameWrapper);
@@ -144,7 +144,7 @@ Error registerEHFrameSection(const void *EHFrameSectionAddr,
 
 Error deregisterEHFrameSection(const void *EHFrameSectionAddr,
                                size_t EHFrameSectionSize) {
-#ifdef __APPLE__
+#if defined(__APPLE__) || (EXECUTION_ENGINE_USE_LLVM_UNWINDER == 1)
   return walkAppleEHFrameSection(static_cast<const char *>(EHFrameSectionAddr),
                                  EHFrameSectionSize, deregisterFrameWrapper);
 #else

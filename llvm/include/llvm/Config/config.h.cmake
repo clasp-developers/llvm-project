@@ -299,6 +299,9 @@
 /* Doesn't use `cmakedefine` because it is allowed to be empty. */
 #define LLVM_DEFAULT_TARGET_TRIPLE "${LLVM_DEFAULT_TARGET_TRIPLE}"
 
+/* Define if LLVM libunwind is used for ExecutionEngine. */
+#cmakedefine01 EXECUTION_ENGINE_USE_LLVM_UNWINDER
+
 /* Define if zlib compression is available */
 #cmakedefine01 LLVM_ENABLE_ZLIB
 

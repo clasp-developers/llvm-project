@@ -67,8 +67,7 @@ static void __deregister_frame(void *p) {
 }
 #endif
 
-#ifdef __APPLE__
-
+#if defined(__APPLE__) || (EXECUTION_ENGINE_USE_LLVM_UNWINDER == 1)
 static const char *processFDE(const char *Entry, bool isDeregister) {
   const char *P = Entry;
   uint32_t Length = *((const uint32_t *)P);
